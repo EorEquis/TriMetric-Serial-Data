@@ -1,4 +1,4 @@
-#include <SoftwareSerial.h>
+include <SoftwareSerial.h>
 
 SoftwareSerial TriMetric(2, 3); // RX, TX for TM-2030
 SoftwareSerial SC2030(4, 5); // RX, TX for SC-2030
@@ -20,15 +20,15 @@ void loop(){
   //  V2 = Volts (Batt 2)
   //  A = Amps
   //  FA = Filtered Amps
-  //  PW = ??  (This value appears to also be in Hex for some reason, as I have some values like 10A, 10D, and so on)
-  //  AH = Amp Hours (Since ???  Since Charged?)
+  //  PW = Charge controller pulse width (First number is charge state, then is hex number defineing pulse width from 0-FF hex.)  What charge state values are, I can't find yet
+  //  AH = Amp Hours From Full
   //  T% = State of charge?
   //  W = Watts
   //  DSC = Days Since Charged
   //  DSE = Days Since Equalized
-  //  PW = ? (Why is PW here twice??  Value is NOT always a repeat of PW above??)
-  //  r% = Replaced Percent?  How is this calculated?  Percent of last used, or percent of all used since last full charge, or percent of amount used over some time?
-  //  pD = ???
+  //  PW = (Why is PW here twice??  No effing clue)
+  //  r% = Replaced Percentage Data?  How is this calculated?  Percent of last used, or percent of all used since last full charge, or percent of amount used over some time?
+  //  pD = Lowest previous discharge Amp Hours.  Total used, remainign capacity?  I dunno yet.
   
   // Contents partially documented here : http://www.bogartengineering.com/sites/default/files/docs/TM2025-TM2030%20Technical%20Information%20On%20Serial%20Data%20Output_0.pdf
   // This is MOSTLY an ASCII data stream, but the PW values appear to be in Hex?
