@@ -20,15 +20,23 @@ void loop(){
   //  V2 = Volts (Batt 2)
   //  A = Amps
   //  FA = Filtered Amps
-  //  PW = Charge controller pulse width (First number is charge state, then is hex number defineing pulse width from 0-FF hex.)  What charge state values are, I can't find yet
+  //  PW = Charge controller pulse width (First number is charge state, then is hex number defineing pulse width from 0-FF hex.)
+          // Charge State Values
+          // 0 - Discharging, < 98% Full : See section 4.5.3 of http://www.bogartengineering.com/sites/default/files/docs/SC2030-9-10-15-UsersInstruc.pdf
+          // 1 - Bulk Charge
+          // 2 - Absorb
+          // 3 - Float
+          // 4 - Finish
+          // 5 - Max Voltage Finish
+          // 6 - Was in float, now discharging, still > 98% Full  
   //  AH = Amp Hours From Full
-  //  T% = State of charge?
+  //  T% = State of charge
   //  W = Watts
   //  DSC = Days Since Charged
   //  DSE = Days Since Equalized
   //  PW = (Why is PW here twice??  No effing clue)
-  //  r% = Replaced Percentage Data?  How is this calculated?  Percent of last used, or percent of all used since last full charge, or percent of amount used over some time?
-  //  pD = Lowest previous discharge Amp Hours.  Total used, remainign capacity?  I dunno yet.
+  //  r% = Replaced Percentage Data - Replaced percentage of used AH since last full charge
+  //  pD = Lowest previous discharge Amp Hours.  Total used, remaining capacity?  I dunno yet.
   
   // Contents partially documented here : http://www.bogartengineering.com/sites/default/files/docs/TM2025-TM2030%20Technical%20Information%20On%20Serial%20Data%20Output_0.pdf
   // This is MOSTLY an ASCII data stream, but the PW values appear to be in Hex?
