@@ -6,6 +6,8 @@
 //
 //  Version History
 //  0.0.1b        03/25/2018        First master branch for sharing
+//  0.0.2b        03/26/2018        Keep the serial buffer clean, and remove
+//                                  sc# for now.  It's not working, dunno why.
 //***************************************************************
 
 #include <SoftwareSerial.h>
@@ -67,6 +69,7 @@ SoftwareSerial SC2030(4, 5); // RX, TX for SC-2030
         }
       }
     }
+    //Serial.println();
     TriMetric.end();
   }
 
@@ -75,26 +78,27 @@ SoftwareSerial SC2030(4, 5); // RX, TX for SC-2030
   //  I haven't yet figured out how the heck the (A)mps are calculated.  Still playing with this one.
   
   void getSC2030() {
-    const char introChar = 'T';
-    bool introCharRx = false;
+    const char introCharSC = 'T';
+    bool introCharRxSC = false;
     SC2030.begin(2400);
-    while (!introCharRx) {
+    while (!introCharRxSC) {
       if (SC2030.available() > 0) {
-        char c = SC2030.read();
-        if (c == introChar) {
-          Serial.print(c);
-          introCharRx = true;
+        char sc = SC2030.read();
+        if (sc == introCharSC) {
+          Serial.print(sc);
+          introCharRxSC = true;
         }
       }
     }
-    while (introCharRx) {
+    while (introCharRxSC) {
+      Serial.println("Here");
       if (SC2030.available() > 0) {
-        char c = SC2030.read();
-        if (c != introChar) {
-            Serial.print(c);
+        char sc = SC2030.read();
+        if (sc != introCharSC) {
+            Serial.print(sc);
           }
-        else if (c == introChar) {
-          introCharRx = false;
+        else if (sc == introCharSC) {
+          introCharRxSC = false;
         }
       }
     }
@@ -110,13 +114,19 @@ void setup(){
 void loop(){
 while (Serial.available() > 0) {
       String strCmd = Serial.readStringUntil('#');
+      // Serial.println(strCmd);
       if (strCmd == "tm") {
         getTriMetric();
         Serial.println();
       }
-      else if (strCmd="sc") {
-        getSC2030();
-        Serial.println();
+      else
+      {
+         while(Serial.available()){char trash = Serial.read();}
       }
+//      else if (strCmd="sc") {
+//        getSC2030();
+//        Serial.println();
+//      }
+
 }
 } // End Loop
